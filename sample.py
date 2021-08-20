@@ -1,1 +1,1 @@
-python("Welcome to Hitech")
+print("Welcome to Hitech")
