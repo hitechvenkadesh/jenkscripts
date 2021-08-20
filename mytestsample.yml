@@ -1,0 +1,154 @@
+Parameters:
+  vpccidrblock:
+    Type: String
+    Description: Type your VPC CIDR
+   
+  vpcnametag:
+    Type: String
+    Description: Type your VPC Name
+    
+  Subnet1cidrblock:
+    Type: String
+    Description: Type your Subnet1 CIDR
+   
+  Subnet1nametag:
+    Type: String
+    Description: Type your Subnet1 Name
+    
+  Subnet1Zone:
+    Type: String
+    Description: Type your Subnet1 Zone
+  
+  Subnet2cidrblock:
+    Type: String
+    Description: Type your Subnet2 CIDR
+   
+  Subnet2nametag:
+    Type: String
+    Description: Type your Subnet2 Name
+    
+  Subnet2Zone:
+    Type: String
+    Description: Type your Subnet2 Zone
+  
+  destcidr:
+    Type: String
+    Description: Type your DestinationCidrBlock
+    Default: 0.0.0.0/0
+
+Resources:
+  Vidhyavpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref vpccidrblock
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      Tags:
+       - Key: Name
+         Value: !Ref vpcnametag
+       
+  Subnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: !Ref Subnet1cidrblock
+      VpcId: 
+        Ref: Vidhyavpc
+      AvailabilityZone: !Ref Subnet1Zone 
+      Tags:
+       - Key: Name
+         Value: !Ref Subnet1cidrblock
+       
+  Subnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: !Ref Subnet2cidrblock
+      VpcId: 
+        Ref: Vidhyavpc
+      AvailabilityZone: !Ref Subnet2Zone 
+      Tags:
+       - Key: Name
+         Value: !Ref Subnet2nametag 
+
+  CFTRT1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:       
+        Ref: Vidhyavpc
+      Tags:
+       - Key: Name
+         Value: PublicRoute
+       
+  CFTRT2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:       
+        Ref: Vidhyavpc
+      Tags:
+       - Key: Name
+         Value: PrivateRoute
+       
+  IGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+       - Key: Name
+         Value: MYIGW  
+       
+  MySubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: 
+        Ref: Subnet1
+      RouteTableId:
+        Ref: CFTRT1
+
+  MySubnetRouteTableAssociation2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: 
+        Ref: Subnet2
+      RouteTableId:
+        Ref: CFTRT2
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: 
+        Ref: Vidhyavpc
+      InternetGatewayId:
+        Ref: IGW
+
+  Myrouteentry:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: !Ref destcidr
+      RouteTableId:
+        Ref: CFTRT1
+      GatewayId:
+        Ref: IGW
+        
+Outputs:
+  VPCID:
+    Description: The VPC ID
+    Value: !Ref Vidhyavpc
+    
+  Subnet1ID:
+    Description: The Subnet1 ID
+    Value: !Ref Subnet1
+    
+  Subnet2ID:
+    Description: The Subnet2 ID
+    Value: !Ref Subnet2 
+    
+  PublicRouteId:
+    Description: The PublicRoute ID
+    Value: !Ref CFTRT1
+    
+  PrivateRouteId:
+    Description: The PublicRoute ID
+    Value: !Ref CFTRT2
+    
+  InternetGatewayId:
+    Description: The PublicRoute ID
+    Value: !Ref IGW
+  

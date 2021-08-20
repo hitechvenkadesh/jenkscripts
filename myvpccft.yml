@@ -1,0 +1,50 @@
+Resources:
+  hitechvpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 192.168.0.0/16
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      InstanceTenancy: default
+      Tags:
+       - Key: Name
+         Value: CFT_VPC
+  
+  hitechsubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 192.168.1.0/24
+      VpcId: 
+        Ref: hitechvpc
+      MapPublicIpOnLaunch: 'true'
+      AvailabilityZone: "us-east-1a"
+      Tags:
+       - Key: Name
+         Value: CFT_Subnet1
+      
+  hitechsubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 192.168.2.0/24
+      VpcId: 
+        Ref: hitechvpc
+      AvailabilityZone: "us-east-1a"
+      Tags:
+       - Key: Name
+         Value: CFT_Subnet2
+         
+  hitechigw:
+    Type: AWS::EC2::InternetGateway
+    Properties: 
+      Tags:
+       - Key: Name
+         Value: hitechIGW
+  
+  AttachIGW:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties: 
+      InternetGatewayId: !Ref hitechigw
+      VpcId: !Ref hitechvpc
+    
+  
+  
