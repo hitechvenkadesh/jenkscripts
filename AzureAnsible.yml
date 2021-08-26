@@ -1,0 +1,29 @@
+- hosts: azure
+  connection: local
+  gather_facts: no
+  vars:
+  - ansible_python_interpreter: /usr/bin/python3
+  tasks:
+  - name: Creating a new Resource Group
+    azure_rm_resourcegroup:
+      name: hitechrg
+      location: eastus
+      
+  - name: Creating a storage account
+    azure_rm_storageaccount:
+      resource_group: hitechrg
+      name: hitechb36storage
+      type: Standard_LRS
+  
+  - name: Creating a Virtual Network
+    azure_rm_virtualnetwork:
+      resource_group: hitechrg
+      name: hitechb36vnet
+      address_prefixes_cidr: "10.1.0.0/16"
+  
+  - name: Creating a subnet
+    azure_rm_subnet:
+      resource_group: hitechrg
+      virtual_network_name: hitechb36vnet
+      name: htSubnet
+      address_prefix_cidr: "10.1.0.0/24"    
