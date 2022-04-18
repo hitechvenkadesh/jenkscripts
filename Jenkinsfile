@@ -34,7 +34,7 @@ pipeline {
 					
 					ls
 					
-					python3 test.py
+					python3 sample.py
 				   
 				'''
 			} // end of steps
