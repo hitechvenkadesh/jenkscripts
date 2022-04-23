@@ -1,6 +1,3 @@
-provider "aws" {
-  region = "ap-south-1"
-  }
 variable "acc_no" {
   type = string
 }
@@ -10,6 +7,13 @@ variable "access_key" {
 variable "secret_access_key" {
   type = string
 }
+
+provider "aws" {
+  region = "ap-south-1"
+  access_key = var.access_key
+  secret_key = var.secret_access_key
+  }
+
 resource "aws_iam_user" "sowmi"{
     name = "sowmi"
 	}
