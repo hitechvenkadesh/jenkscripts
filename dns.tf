@@ -14,6 +14,8 @@ terraform {
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
   features {}
+  subscription_id = "d9fb316f-af84-4596-aa98-cf6839a1c27f"
+  tenant_id = "2358adda-9b85-4370-b529-fbc0284268bd"
 }
 
 resource "azurerm_private_dns_zone" "tfdns" {
