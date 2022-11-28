@@ -1,8 +1,6 @@
 import boto3
 
-listec2 = boto3.client('ec2',region_name='ap-south-1',
-	aws_access_key_id=,
-	aws_secret_access_key=)
+listec2 = boto3.client('ec2')
 
 output = listec2.describe_instances()
 for printid in output['Reservations']:
