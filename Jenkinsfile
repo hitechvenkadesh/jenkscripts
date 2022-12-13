@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'boto3slave'} 
+    agent {label 'Master'} 
     stages  {
         stage('Clean workspace'){
             steps {
