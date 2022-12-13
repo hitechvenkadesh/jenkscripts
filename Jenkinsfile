@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'Master'} 
+    agent {label 'armslave'} 
     stages  {
         stage('Clean workspace'){
             steps {
