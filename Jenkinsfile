@@ -35,7 +35,7 @@ pipeline {
 	  
 				sh'''
 					
-					echo "${WORKSPACE}"
+					echo "${WORKSPACE}/terra"
           ls
 					terraform init
 				   
@@ -48,7 +48,7 @@ pipeline {
 	  
 				sh'''
 					
-					echo "${WORKSPACE}"
+					echo "${WORKSPACE}/terra"
 					
 					terraform plan -var "subscription_id=${subscription_id}" -var "client_id=${client_id}" -var "client_secret=${client_secret}" -var "tenant_id=${tenant_id}"
 					
@@ -61,7 +61,7 @@ pipeline {
 	  
 				sh'''
 					
-					echo "${WORKSPACE}"
+					echo "${WORKSPACE}/terra"
 					
 					terraform apply -auto-approve -var "subscription_id=${subscription_id}" -var "client_id=${client_id}" -var "client_secret=${client_secret}" -var "tenant_id=${tenant_id}"
 				   
