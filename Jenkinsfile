@@ -20,7 +20,7 @@ pipeline {
    		 {
             steps{
 	            echo "In scm stage"
-	            git clone 'https://github.com/hitechvenkadesh/terra.git'
+	            git clone https://github.com/hitechvenkadesh/terra.git
             }
         }
     
