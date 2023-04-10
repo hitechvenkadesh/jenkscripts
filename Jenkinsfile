@@ -1,14 +1,14 @@
 properties([
 	parameters([
-		string(defaultValue: '5cf911d9-f203-4d74-b253-c55ac4561656', description: 'Enter SubscriptionID', name: 'subscription_id', trim: false),
+		string(defaultValue: '254fc39b-c667-436b-80a7-f0dc7038e484', description: 'Enter SubscriptionID', name: 'subscription_id', trim: false),
         string(description: 'Enter client_id', name: 'client_id', trim: false),
 		string(description: 'Enter client_secret', name: 'client_secret', trim: false),
-		string(defaultValue: '1c8dc502-073c-43fb-864e-10f11ff2cf35', description: 'Enter tenant_id', name: 'tenant_id', trim: false)
+		string(defaultValue: 'c4ee9917-7207-4268-aafe-ef8a9ed9f230', description: 'Enter tenant_id', name: 'tenant_id', trim: false)
     ])
 ])
 
 pipeline {
-    agent {label 'Master'} 
+    agent {label 'azure'} 
     stages  {
         stage('Clean workspace'){
             steps {
@@ -63,7 +63,7 @@ pipeline {
 					
 					echo "${WORKSPACE}/terra"
 					
-					terraform apply -auto-approve -var "subscription_id=${subscription_id}" -var "client_id=${client_id}" -var "client_secret=${client_secret}" -var "tenant_id=${tenant_id}"
+					terraform apply --auto-approve -var "subscription_id=${subscription_id}" -var "client_id=${client_id}" -var "client_secret=${client_secret}" -var "tenant_id=${tenant_id}"
 				   
 				'''
 			} // end of steps
