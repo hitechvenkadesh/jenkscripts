@@ -8,7 +8,7 @@ properties([
 ])
 
 pipeline {
-    agent {label 'azure'} 
+    agent {label 'terraform'} 
     stages  {
         stage('Clean workspace'){
             steps {
